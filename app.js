@@ -4,11 +4,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const connectionString = process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString,
+{useNewUrlParser: true, useUnifiedTopology: true});
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var horsesRouter = require('./routes/horses');
 var starsRouter = require('./routes/stars');
 var slotRouter = require('./routes/slot');
+var resourceRouter = require('./routes/resource');
 var app = express();
 
 // view engine setup
@@ -26,6 +32,8 @@ app.use('/users', usersRouter);
 app.use('/horses', horsesRouter);
 app.use('/stars', starsRouter);
 app.use('/slot', slotRouter);
+app.use('/resource', resourceRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -43,3 +51,41 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connectionerror:'));
+db.once("open", function(){
+console.log("Connection to DB succeeded");
+});
+
+var horse = require("./models/horse");
+
+// We can seed the collection if needed on server start
+async function recreateDB(){
+  // Delete everything
+  await horse.deleteMany();
+  let instance1 = new horse({teamname:"49 Rockers",country:'India',
+  number_of_players:12});
+  instance1.save( function(err,doc) {
+  if(err) return console.error(err);
+  console.log("First object saved")
+  });
+  let instance2 = new horse({teamname:"nans punchers",country:'America',
+  number_of_players:15});
+  instance2.save( function(err,doc) {
+  if(err) return console.error(err);
+  console.log("Second object saved")
+  });
+  let instance3 = new horse({teamname:"cute oorlu",country:'Maryville',
+  number_of_players:100});
+  instance3.save( function(err,doc) {
+  if(err) return console.error(err);
+  console.log("Third object saved")
+  });
+  }
+  let reseed = true;
+  if (reseed) { recreateDB();}
+
+

@@ -2,12 +2,13 @@ extends layout
 
 block content
   h1= title
-  - let horses=[{teamname:"Boston Bruins",country:"Boston",number_of_players:"11"},{teamname:"NewYork Rangers",country:"Newyork",number_of_players:"11"},{teamname:"Chicago Blackhawks",country:"Chicago",number_of_players:"11"}]
-    div(class="container-fluid mt-3")
-    div(class="row")
-        each horse,index in horses
-            div(class="col-sm-2  bg-success m-1 p-3" onclick=`buy(${index})`) #{horse.teamname} - #{horse.country} - #{horse.number_of_players}
-    script.
+  //- let horses=[{teamname:"Boston Bruins",country:"Boston",number_of_players:"11"},{teamname:"NewYork Rangers",country:"Newyork",number_of_players:"11"},{teamname:"Chicago Blackhawks",country:"Chicago",number_of_players:"11"}]
+  - let horses = results
+  div(class="container-fluid mt-3")
+  div(class="row")
+    each horse,index in horses
+      div(class="col-sm-2  bg-success m-1 p-3" onclick=`buy(${index})`) #{horse.teamname} - #{horse.country} - #{horse.number_of_players}
+  script.
      
       function buy(itemNo)
       {
