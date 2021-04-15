@@ -14,7 +14,7 @@ exports.horse_list = async function(req, res) {
         };
 
 // for a specific horse.
-// for a specific Costume.
+// for a specific horse.
 exports.horse_detail = async function(req, res) {
     console.log("detail"  + req.params.id)
     try {
@@ -49,9 +49,19 @@ exports.horse_create_post = async function(req, res) {
        }
     };
 // Handle horse delete form on DELETE.
-exports.horse_delete = function(req, res) {
-res.send('NOT IMPLEMENTED: horse delete DELETE ' + req.params.id);
+
+exports.horse_delete = async function(req, res) {
+    console.log("delete "  + req.params.id)
+    try {
+        result = await horse.findByIdAndDelete( req.params.id)
+        console.log("Removed " + result)
+        res.send(result)
+    } catch (err) {her
+        res.status(500)
+        res.send(`{"error": Error deleting ${err}}`);
+    }
 };
+
 // Handle horse update form on PUT.
 exports.horse_update_put = async function(req, res) {
     console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`)
@@ -85,3 +95,51 @@ exports.horse_view_all_Page = async function(req, res) {
         res.send(`{"error": ${err}}`);
        }
     };
+
+    // Handle a show one view with id specified by query
+    exports.horse_view_one_Page = async function(req, res) {
+        console.log("single view for id "  + req.query.id)
+        try{
+            result = await horse.findById( req.query.id)
+            res.render('horsedetail', 
+    { title: 'horse Detail', toShow: result });
+        }
+        catch(err){
+            res.status(500)
+            res.send(`{'error': '${err}'}`);
+        }
+    };
+    exports.horse_create_Page =  function(req, res) {
+        console.log("create view")
+        try{
+            res.render('horsecreate', { title: 'horse Create'});
+        }
+        catch(err){
+            res.status(500)
+            res.send(`{'error': '${err}'}`);
+        }
+    };
+    exports.horse_update_Page =  async function(req, res) {
+        console.log("update view for item "+req.query.id)
+        try{
+            let result = await horse.findById(req.query.id)
+            res.render('horseupdate', { title: 'horse Update', toShow: result });
+        }
+        catch(err){
+            res.status(500)
+            res.send(`{'error': '${err}'}`);
+        }
+    };
+    exports.horse_delete_Page = async function(req, res) {
+        console.log("Delete view for id "  + req.query.id)
+        try{
+            result = await horse.findById(req.query.id)
+            res.render('horsedelete', { title: 'horse Delete', toShow: result });
+        }
+        catch(err){
+            res.status(500)
+            res.send(`{'error': '${err}'}`);
+        }
+    };
+    
+    
