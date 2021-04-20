@@ -8,5 +8,27 @@ a {
 }
 .horseAttr {
   background-color: aquamarine;
-  width: 120px;
+  width: 250px;
+  margin: 2px;
+  text-align: center;
+  padding: 5px;
+}
+#horseTitle{
+  color:rgb(224, 201, 137);
+  font-weight: 800;
+  font-family: Georgia, serif;
+  text-decoration:  underline;;
+}
+
+.myItems{
+  margin: 5px;
+  padding: 13px;
+  justify-content:center;
+  font-weight: 900;
+  background-color:lightpink;
+  border-radius: 2px;
+}
+.myItems:hover{
+  background-color: rgb(213, 4, 255);
+  color: rgb(36, 33, 33);
 }

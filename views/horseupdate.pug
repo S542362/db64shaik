@@ -2,42 +2,44 @@ extends layout
 
 block content
   h1= title
+   if (toShow == null)
+    h2 No instance to delete
+   else
+        - let horseid = toShow._id
+        - let teamname = toShow.teamname
+        - let country = toShow.country
+        - let number_of_players = toShow.number_of_players
+        
+        div.row(class='mb-2')
+            div.mr-1 ID is
+            div #{horseid}
+        - let actionid = "/resource/resource/horses/" + horseid
+        form(id='horseForm', action= actionid, method="PUT")
+            div.form-group
+                label.horseAttr(for='teamname') teamname
+                input#teamname(type='text', name='teamname', value= teamname )
+            div.form-group
+                label.horseAttr(for='country') country
+                input#size(type='text', name='country', value= country)
+            div.form-group
+                label.horseAttr(for='number_of_players') number_of_players
+                input#cost(type='number', name='number_of_players', value= number_of_players  )
+            input(type="submit")
 
-  - let horseid = toShow._id
-  - let teamname = toShow.teamname
-  - let country = toShow.country
-  - let number_of_players = toShow.number_of_players
-  
-  div.row(class='mb-2')
-    div.mr-1 ID is
-    div #{horseid}
-  - let actionid = "/resource/resource/horses/" + horseid
-  form(id='horseForm', action= actionid, method="PUT")
-    div.form-group
-        label.horseAttr(for='teamname') teamname
-        input#teamname(type='text', name='teamname', value= teamname )
-    div.form-group
-        label.horseAttr(for='country') country
-        input#size(type='text', name='country', value= country)
-    div.form-group
-        label.horseAttr(for='number_of_players') number_of_players
-        input#cost(type='number', name='number_of_players', value= number_of_players  )
-    input(type="submit")
-
-  script.
-    document.forms['horseForm'].addEventListener('submit', (event) => {
-      event.preventDefault();
-      // TODO do something here to show user that form is being submitted
-      fetch(event.target.action, {
-        method: 'PUT',
-        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
-      }).then((resp) => {
-        return resp.json(); // or resp.text() or whatever the server sends
-      }).then((body) => {
-        alert("Update succeded")
-        // TODO handle body
-      }).catch((error) => {
-        // TODO handle error
-        alert("Update failed " + error )
-      });
-    });
+        script.
+            document.forms['horseForm'].addEventListener('submit', (event) => {
+            event.preventDefault();
+            // TODO do something here to show user that form is being submitted
+            fetch(event.target.action, {
+                method: 'PUT',
+                body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+            }).then((resp) => {
+                return resp.json(); // or resp.text() or whatever the server sends
+            }).then((body) => {
+                alert("Update succeded")
+                // TODO handle body
+            }).catch((error) => {
+                // TODO handle error
+                alert("Update failed " + error )
+            });
+            });

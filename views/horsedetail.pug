@@ -1,22 +1,24 @@
 extends layout
 
 block content
-  h1= title
-
-  - let horseid = toShow._id
-  - let horsetype = toShow.teamname
-  - let horsecost = toShow.country
-  - let horsesize = toShow.number_of_players
-  div
-    div.row
-      div(class='horseAttr mr-3') horse ID is:
-      div #{horseid}
-    div.row
-      div(class='horseAttr mr-3') teamname is:
-      div #{horsetype}
-    div.row
-      div(class='horseAttr mr-3') country is:
-      div #{horsecost}
-    div.row
-      div(class='horseAttr mr-3') number_of_players:
-      div #{horsesize}
+  h1(id="horseTitle")= title
+  if (toShow == null)
+    h2 No instance to delete
+  else
+    - let horseid = toShow._id
+    - let horsetype = toShow.teamname
+    - let horsecost = toShow.country
+    - let horsesize = toShow.number_of_players
+    div
+        div.row
+        div(class='horseAttr mr-3') horse ID is:
+        div(class="myItems") #{horseid}
+        div.row
+        div(class='horseAttr mr-3') teamname is:
+        div(class="myItems") #{horsetype}
+        div.row
+        div(class='horseAttr mr-3') country is:
+        div(class="myItems") #{horsecost}
+        div.row
+        div(class='horseAttr mr-3') number_of_players:
+        div(class="myItems") #{horsesize}
